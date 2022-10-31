@@ -22,8 +22,8 @@ connection.once('open', () => {
 const carsRouter = require('../routes/cars');
 const usersRouter = require('../routes/users');
 
-app.use('/.netlify/functions/server', carsRouter);
-app.use('/.netlify/functions/server', usersRouter);
+app.use('/.netlify/functions/server/cars', carsRouter);
+app.use('/.netlify/functions/server/users', usersRouter);
 
 // app.listen(port, () => {
 //     console.log(`Server is running on port: ${port}`);
