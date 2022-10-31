@@ -1,7 +1,7 @@
 const express = require('express');
 const cors = require('cors');
 const mongoose = require('mongoose');
-
+const serverless = require('serverless-http');
 require('dotenv').config();
 
 const app = express();
@@ -19,12 +19,14 @@ connection.once('open', () => {
   console.log("MongoDB database connection established successfully");
 })
 
-const carsRouter = require('./routes/cars');
-const usersRouter = require('./routes/users');
+const carsRouter = require('../routes/cars');
+const usersRouter = require('../routes/users');
 
-app.use('/cars', carsRouter);
-app.use('/users', usersRouter);
+app.use('/.netlify/functions/server', carsRouter);
+app.use('/.netlify/functions/server', usersRouter);
 
-app.listen(port, () => {
-    console.log(`Server is running on port: ${port}`);
-});
+// app.listen(port, () => {
+//     console.log(`Server is running on port: ${port}`);
+// });
+module.exports = app;
+module.exports.handler=serverless(app)

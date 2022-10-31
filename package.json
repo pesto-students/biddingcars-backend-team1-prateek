@@ -2,9 +2,10 @@
   "name": "backend",
   "version": "1.0.0",
   "description": "",
-  "main": "server.js",
+  "main": "functions/server.js",
   "scripts": {
-    "start": "nodemon server.js",
+    "start": "nodemon serverlocal.js",
+    "build": "netlify-lambda build express --config webpack.functions.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
@@ -18,6 +19,9 @@
     "firebase-admin": "^11.2.0",
     "mongoose": "^6.6.2",
     "multer": "^1.4.5-lts.1",
-    "nodemon": "^2.0.20"
+    "netlify-lambda": "^2.0.15",
+    "nodemon": "^2.0.20",
+    "serverless-http": "^3.1.0",
+    "webpack-node-externals": "^3.0.0"
   }
 }
