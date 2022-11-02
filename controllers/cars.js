@@ -3,7 +3,7 @@ const Timeline = require('../models/timeline.model');
 const User = require('../models/user.model');
 const cloudinary = require('../utils/cloudinary');
 const { connection } = require('../express/mongoDB');
-const { io } = require('../socketIO');
+const { io } = require('../express/socketIO');
 
 exports.listCar = async (req, res) => {
   try {
