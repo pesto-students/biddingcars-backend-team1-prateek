@@ -47,6 +47,10 @@ const carSchema = new Schema({
     type: Number,
     default:0
   },
+    endTime: {
+    type: Date,
+    // required: true
+  },
   bidTimelineId: { type: Number,
     // required: true
   },
@@ -58,6 +62,10 @@ const carSchema = new Schema({
     enum: ["pending for approval", "approved","rejected","sold"],
     required: true,
   },
+  lock: {
+    type: Boolean,
+    default:false
+  }
 }, {
   timestamps: true,
 });

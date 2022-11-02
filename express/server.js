@@ -1,6 +1,7 @@
 const express = require('express');
 const cors = require('cors');
 const mongoose = require('mongoose');
+const { connection } = require('./mongoDB');
 const serverless = require('serverless-http');
 require('dotenv').config();
 
@@ -10,23 +11,18 @@ const port = process.env.PORT || 5000;
 app.use(cors());
 app.use(express.json());
 
-const uri = process.env.ATLAS_URI;
-console.log('uri',uri)
-mongoose.connect(uri, { useNewUrlParser: true }
-);
-const connection = mongoose.connection;
 connection.once('open', () => {
-  console.log("MongoDB database connection established successfully");
-})
+  console.log('MongoDB database connection established successfully');
+});
 
 const carsRouter = require('../routes/cars');
 const usersRouter = require('../routes/users');
+const cardsRouter = require('../routes/cards');
 
 app.use('/.netlify/functions/server/cars', carsRouter);
 app.use('/.netlify/functions/server/users', usersRouter);
+app.use('/.netlify/functions/server/cards', cardsRouter);
 
-// app.listen(port, () => {
-//     console.log(`Server is running on port: ${port}`);
-// });
+
 module.exports = app;
 module.exports.handler=serverless(app)

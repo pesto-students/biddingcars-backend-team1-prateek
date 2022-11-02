@@ -45,6 +45,10 @@ const userSchema = new Schema(
     mobileNumber: {
       type: Number,
     },
+    isVerified: {
+      type: Boolean,
+      required:true,
+    },
   },
   {
     timestamps: true,
