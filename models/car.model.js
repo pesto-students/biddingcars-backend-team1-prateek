@@ -59,7 +59,7 @@ const carSchema = new Schema({
   },
   status: {
     type: String,
-    enum: ["pending for approval", "approved","rejected","sold"],
+    enum: ["pending", "approved","rejected","sold"],
     required: true,
   },
   lock: {

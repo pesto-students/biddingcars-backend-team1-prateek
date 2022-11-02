@@ -3,6 +3,7 @@ const Timeline = require('../models/timeline.model');
 const User = require('../models/user.model');
 const cloudinary = require('../utils/cloudinary');
 const { connection } = require('../express/mongoDB');
+const { io } = require('../socketIO');
 
 exports.listCar = async (req, res) => {
   try {
@@ -34,7 +35,7 @@ exports.listCar = async (req, res) => {
         currentBid: req.body.currentBid,
         bidTimelineId: req.body.bidTimelineId,
         currentBidUserId: req.body.currentBidUserId,
-        status: 'pending for approval',
+        status: 'pending',
         endTime: req.body.endTime,
       });
 
@@ -158,7 +159,7 @@ exports.placeBid = async (req, res) => {
             {
               _id: car._id,
             },
-            { lock: true }
+            { lock: true },
           );
           //start transaction
           const session = await connection.startSession();
@@ -217,13 +218,15 @@ exports.placeBid = async (req, res) => {
             } else {
               throw new Error('Bidding amount should be greater than current bid');
             }
-            await Car.findOneAndUpdate(
+            const newCar = await Car.findOneAndUpdate(
               {
                 _id: car._id,
               },
               { lock: false },
               { session },
             );
+
+            io.emit('bid_update', newCar);
             session.endSession();
 
 
