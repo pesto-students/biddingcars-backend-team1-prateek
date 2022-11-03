@@ -253,12 +253,13 @@ exports.placeBid = async (req, res) => {
 exports.placeBidCheck = async (req, res) => {
   try {
     const owner = await User.findById(req.body.car.ownerId);
+    const vercheck = await User.find({email:req.user.email},{"isVerified":1,"_id":0});
     if (req.user.email === owner.email) {
       res.status(200).json({check:false, message: 'Owner cannot bid on his own car' });
     }else if (req.user.role === "admin") {
-      res.status(200).json({check:false, message: 'Admin cannot bid on his own car' });
+      res.status(200).json({check:false, message: 'Admin cannot bid' });
     }else{
-    res.status(200).json({check:true});}
+    res.status(200).json({check:true,isVerified:vercheck[0].isVerified});}
   } catch (err) {
     console.log(err);
     res.status(500).json({ message: err });

@@ -7,7 +7,8 @@ const socketServer = http.createServer(socketApp);
 const { Server } = require("socket.io");
 const io = new Server(socketServer, {
   cors: {
-    origin: "http://localhost:3000",
+    // origin: "http://localhost:3000",
+    origin: "https://biddingcars.netlify.app/",
     methods: ["GET", "POST"],
   },
 });
@@ -17,5 +18,5 @@ socketApp.use(cors());
 socketServer.listen(4000, () => {
     console.log(`Server is running on socket: 4000`);
 });
-  
+
 module.exports = { io };
