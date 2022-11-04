@@ -27,9 +27,9 @@ connection.once('open', () => {
   console.log('MongoDB database connection established successfully');
 });
 
-io.on('connection', (socket) => {
-  console.log('a user connected');
-});
+// io.on('connection', (socket) => {
+//   console.log('a user connected');
+// });
 const carsRouter = require('../routes/cars');
 const usersRouter = require('../routes/users');
 const cardsRouter = require('../routes/cards');
@@ -41,3 +41,6 @@ app.use('/.netlify/functions/server/cards', cardsRouter);
 
 module.exports = app;
 module.exports.handler=serverless(app)
+
+
+"shripatipandey171@gmail.com"

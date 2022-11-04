@@ -1,21 +1,7 @@
-const express = require('express');
-const cors = require('cors');
-
-const socketApp = express();
-const http = require('http');
-const socketServer = http.createServer(socketApp);
-const { Server } = require("socket.io");
-const io = new Server(socketServer, {
-  cors: {
-    origin: "http://localhost:3000",
-    methods: ["GET", "POST"],
-  },
+const { io } = require('socket.io-client');
+const socket = io.connect(`https://bidding-cars-socket.herokuapp.com/`);
+socket.on("connect", () => {
+  console.log("Connected to websocket server");
 });
 
-socketApp.use(cors());
-
-socketServer.listen(4000, () => {
-    console.log(`Server is running on socket: 4000`);
-});
-  
-module.exports = { io };
+module.exports = { socket };

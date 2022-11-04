@@ -226,7 +226,7 @@ exports.placeBid = async (req, res) => {
               { session },
             );
 
-            io.emit('bid_update', newCar);
+            // io.emit('bid_update', newCar);
             session.endSession();
 
 
