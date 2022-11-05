@@ -1,6 +1,6 @@
 const admin = require("../config/firebase-config");
 const User = require('../models/user.model');
-
+const {Sentry,transaction}=require('../express/sentry')
 const requireSignin = async (req, res, next) => {
 
   if (req.headers.authorization) {
@@ -14,8 +14,11 @@ const requireSignin = async (req, res, next) => {
       }
       return res.status(401).json({ message: "Authorization required" });
     } catch (err) {
+      Sentry.captureException(err);
       res.status(400).json(err)
-    }
+    }finally{
+      transaction.finish()
+    };
   } else {
     return res.status(401).json({ message: "Unauthorized Access" });
   }

@@ -4,7 +4,7 @@
   "description": "",
   "main": "functions/server.js",
   "scripts": {
-    "start": "nodemon serverlocal.js",
+    "start": "nodemon --trace-warnings serverlocal.js",
     "build": "netlify-lambda build express --config webpack.functions.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -12,6 +12,8 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@sentry/node": "^7.17.4",
+    "@sentry/tracing": "^7.17.4",
     "cloudinary": "^1.32.0",
     "cors": "^2.8.5",
     "dotenv": "^16.0.2",
@@ -22,7 +24,8 @@
     "netlify-lambda": "^2.0.15",
     "nodemon": "^2.0.20",
     "serverless-http": "^3.1.0",
-    "webpack-node-externals": "^3.0.0",
-    "socket.io": "^4.5.3"
+    "socket.io": "^4.5.3",
+    "socket.io-client": "^4.5.3",
+    "webpack-node-externals": "^3.0.0"
   }
 }

@@ -1,22 +1,32 @@
 let Carddetails = require('../models/carddetails.model');
 const User = require('../models/user.model');
+const {Sentry,transaction}=require('../express/sentry')
 exports.getCarddetails = (req, res) => {
   Carddetails.find()
     .then((cards) => res.json(cards))
-    .catch((err) => res.status(400).json("Error: " + err));
+    .catch((err) => {
+          res.status(400).json('Error: ' + err)
+          Sentry.captureException(err);
+        }).finally(()=>transaction.finish());
 };
 
 exports.addCarddetails = async (req, res) => {
     const newCarddetails = new Carddetails({
       customerId:req.user._id,
-      customerName: req.body.name,
-      cardNumber: Number(req.body.cardnumber),
-      expiryDate: req.body.expiry,
-      cardType:req.body.cardtype,
-      cvv:Number(req.body.cvv),
+      customerName: req.body.namec,
+      accountNumber: Number(req.body.accountnumber),
+      aadharNumber: Number(req.body.aadhar),
+      panNumber:req.body.pan,
+      creditScore:Number(req.body.creditscore),
+      annualAvgIncome:Number(req.body.annualavgincome),
+      incomeSource:req.body.incomesource,
+      accountType:req.body.accounttype
     });
     newCarddetails
       .save()
     .then(() => res.json("Card details added!"))
-    .catch((err) => res.status(400).json("Error: " + err));
+    .catch((err) => {
+          res.status(400).json('Error: ' + err)
+          Sentry.captureException(err);
+        }).finally(()=>transaction.finish());
 }

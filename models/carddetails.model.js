@@ -11,21 +11,32 @@ const carddetailsSchema = new Schema(
     type: String,
     required: true,
     },
-    cardNumber: {
+    accountNumber: {
       type: Number,
       required: true,
     },
-    expiryDate: {
-      type: String,
-    },
-    cardType: {
-      type: String,
-      enum: ["creditCard", "debitCard"],
+    aadharNumber: {
+      type: Number,
       required: true,
     },
-    cvv: {
-      type: Number,
+    panNumber: {
+      type: String,
+      required: true,
+      },
+      accountType: {
+      type: String,
+      enum: ["Current", "Savings"],
+      required: true,
     },
+    creditScore: {
+      type: Number,
+      required: true,
+    },
+    annualAvgIncome: {
+      type: Number,
+      required: true,
+    },incomeSource:{ type: String,
+      required: true,}
   },
   {
     timestamps: true,

@@ -4,6 +4,7 @@ const User = require('../models/user.model');
 const cloudinary = require('../utils/cloudinary');
 const { connection } = require('../express/mongoDB');
 const { io } = require('../express/socketIO');
+const {Sentry,transaction}=require('../express/sentry')
 
 exports.listCar = async (req, res) => {
   try {
@@ -42,11 +43,17 @@ exports.listCar = async (req, res) => {
       newCar
         .save()
         .then((saved) => res.status(200).json({ message: 'Listing added successfully!!', carDetails: saved }))
-        .catch((err) => res.status(400).json('Error: ' + err));
+        .catch((err) => {
+          res.status(400).json('Error: ' + err)
+          Sentry.captureException(err);
+        }).finally(()=>transaction.finish());
     });
   } catch (err) {
+    Sentry.captureException(err);
     res.status(400).json('Error: ' + err);
-  }
+  }finally {
+        transaction.finish();
+      }
 };
 
 exports.updateCar = async (req, res) => {
@@ -68,56 +75,82 @@ exports.updateCar = async (req, res) => {
         car
           .save()
           .then(() => res.json('Car updated!'))
-          .catch((err) => res.status(400).json('Error: ' + err));
+          .catch((err) => {
+          res.status(400).json('Error: ' + err)
+          Sentry.captureException(err);
+        }).finally(()=>transaction.finish());
     })
-    .catch((err) => res.status(400).json('Error: ' + err));
+    .catch((err) => {
+          res.status(400).json('Error: ' + err)
+          Sentry.captureException(err);
+        }).finally(()=>transaction.finish());
 };
 
 exports.verifyCar = async (req, res) => {
   Car.findById(req.params.id)
     .then((car) => {
-      (car.status = req.body.status),
+      (car.status = 'approved'),
         car
           .save()
           .then(() => res.json('Car Verified!'))
-          .catch((err) => res.status(400).json('Error: ' + err));
+          .catch((err) => {
+          res.status(400).json('Error: ' + err)
+          Sentry.captureException(err);
+        }).finally(()=>transaction.finish());
     })
-    .catch((err) => res.status(400).json('Error: ' + err));
+    .catch((err) => {
+          res.status(400).json('Error: ' + err)
+          Sentry.captureException(err);
+        }).finally(()=>transaction.finish());
 };
 
 exports.rejectCar = async (req, res) => {
   Car.findById(req.params.id)
     .then((car) => {
-      (car.status = req.body.status),
+      (car.status ='rejected'),
         car
           .save()
           .then(() => res.json('Car Rejected!'))
-          .catch((err) => res.status(400).json('Error: ' + err));
+          .catch((err) => {
+          res.status(400).json('Error: ' + err)
+          Sentry.captureException(err);
+        }).finally(()=>transaction.finish());
     })
-    .catch((err) => res.status(400).json('Error: ' + err));
+    .catch((err) => {
+          res.status(400).json('Error: ' + err)
+          Sentry.captureException(err);
+        }).finally(()=>transaction.finish());
 };
 
 exports.deleteCar = async (req, res) => {
   Car.findByIdAndDelete(req.params.id)
     .then(() => res.json('Car deleted.'))
-    .catch((err) => res.status(400).json('Error: ' + err));
+    .catch((err) => {
+          res.status(400).json('Error: ' + err)
+          Sentry.captureException(err);
+        }).finally(()=>transaction.finish());
 };
 
 exports.getById = (req, res) => {
   Car.findById(req.params.id)
     .then((car) => res.json(car))
-    .catch((err) => res.status(400).json('Error: ' + err));
+    .catch((err) => {
+          res.status(400).json('Error: ' + err)
+          Sentry.captureException(err);
+        }).finally(()=>transaction.finish());
 };
 exports.getMyListings = async (req, res) => {
   const id = await User.find({email: req.params.email},{ "_id": 1});
   Car.find({ownerId:id})
     .then((car) => res.json(car))
-    .catch((err) => res.status(400).json('Error: ' + err));
+    .catch((err) => {
+          res.status(400).json('Error: ' + err)
+          Sentry.captureException(err);
+        }).finally(()=>transaction.finish());
 };
 
 exports.getMyBids = async (req, res) => {
   let id = await User.find({email: req.params.email},{ "_id": 1});
-  console.log(id)
   id=id[0]._id
   let car = await Timeline.find({ timeline: {$elemMatch:{'user._id':id}} },{"carId":1,"_id":0})
   if (car){
@@ -126,7 +159,10 @@ exports.getMyBids = async (req, res) => {
     .then((car) => {
       res.json(car)
     })
-    .catch((err) => res.status(400).json('Error: ' + err));
+    .catch((err) => {
+          res.status(400).json('Error: ' + err)
+          Sentry.captureException(err);
+        }).finally(()=>transaction.finish());
   }else{
     res.json([])
   }
@@ -136,7 +172,10 @@ exports.getMyBids = async (req, res) => {
 exports.getAllListings = async (req, res) => {
   Car.find()
     .then((cars) => res.json(cars))
-    .catch((err) => res.status(400).json('Error: ' + err));
+    .catch((err) => {
+          res.status(400).json('Error: ' + err)
+          Sentry.captureException(err);
+        }).finally(()=>transaction.finish());
 };
 
 exports.placeBid = async (req, res) => {
@@ -226,7 +265,7 @@ exports.placeBid = async (req, res) => {
               { session },
             );
 
-            io.emit('bid_update', newCar);
+            // io.emit('bid_update', newCar);
             session.endSession();
 
 
@@ -246,8 +285,11 @@ exports.placeBid = async (req, res) => {
       { lock: false },
     );
     console.log(err);
+    Sentry.captureException(err);
     res.status(500).json({ message: err });
-  }
+  }finally {
+        transaction.finish();
+      }
 };
 
 exports.placeBidCheck = async (req, res) => {
@@ -262,12 +304,18 @@ exports.placeBidCheck = async (req, res) => {
     res.status(200).json({check:true,isVerified:vercheck[0].isVerified});}
   } catch (err) {
     console.log(err);
+    Sentry.captureException(err);
     res.status(500).json({ message: err });
-  }
+  }finally {
+        transaction.finish();
+      }
 };
 
 exports.getHistory = async (req, res) => {
   Timeline.findOne({ carId: req.params.id })
     .then((timeline) => res.status(200).json({ history: timeline }))
-    .catch((err) => res.status(400).json('Error: ' + err));
+    .catch((err) => {
+          res.status(400).json('Error: ' + err)
+          Sentry.captureException(err);
+        }).finally(()=>transaction.finish());
 };
