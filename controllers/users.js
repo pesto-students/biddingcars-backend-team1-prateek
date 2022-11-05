@@ -12,7 +12,17 @@ exports.getUsers = (req, res) => {
 };
 exports.getVerifiedUsers = async (req, res) => {
 
-  User.find({isVerified:false,role:'user'})
+  User.find( {
+      $and: [{isVerified:false},{role:'user'},
+        { $and: [ { address: { $ne: '' } }, { address: { $ne: null }} ]} ,
+        { $and: [ { city: { $ne: '' } }, { city: { $ne: null }} ]} ,
+        { $and: [ { state: { $ne: '' } }, { state: { $ne: null }} ]} ,
+        { $and: [ { zipCode: { $ne: '' } }, { zipCode: { $ne: null }} ]} ,
+        { $and: [ { country: { $ne: '' } }, { country: { $ne: null }} ]} ,
+        { $and: [ { mobileNumber: { $ne: '' } }, { mobileNumber: { $ne: null }} ]} ,
+
+      ]
+   })
     .then((users) => res.json(users))
     .catch((err) => {
           res.status(400).json('Error: ' + err)
