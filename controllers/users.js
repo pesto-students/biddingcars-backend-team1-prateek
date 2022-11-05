@@ -104,11 +104,11 @@ exports.updateUserByEmail = async (req, res) => {
         country:req.body.country,
         mobileNumber:req.body.mobile,
         customerName: req.body.namec,
-        accountNumber: req.body.accountnumber?Number(req.body.accountnumber):req.body.accountnumber,
-        aadharNumber: req.body.aadhar?Number(req.body.aadhar):req.body.aadhar,
+        accountNumber: req.body.accountnumber,
+        aadharNumber: req.body.aadhar,
         panNumber:req.body.pan,
-        creditScore:req.body.creditscore?Number(req.body.creditscore):req.body.creditscore,
-        annualAvgIncome:req.body.annualavgincomeNumber(req.body.annualavgincome),
+        creditScore:req.body.creditscore,
+        annualAvgIncome:req.body.annualavgincome,
         incomeSource:req.body.incomesource,
         accountType:req.body.accounttype
       }
