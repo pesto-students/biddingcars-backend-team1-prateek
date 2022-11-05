@@ -49,6 +49,28 @@ const userSchema = new Schema(
       type: Boolean,
       required:true,
     },
+    customerName: {
+      type: String,
+      },
+      accountNumber: {
+        type: Number,
+      },
+      aadharNumber: {
+        type: Number,
+      },
+      panNumber: {
+        type: String,
+        },
+        accountType: {
+        type: String,
+        enum: ["Current", "Savings"],
+      },
+      creditScore: {
+        type: Number,
+      },
+      annualAvgIncome: {
+        type: Number,
+      },incomeSource:{ type: String}
   },
   {
     timestamps: true,

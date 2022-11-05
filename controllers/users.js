@@ -20,6 +20,14 @@ exports.getVerifiedUsers = async (req, res) => {
         { $and: [ { zipCode: { $ne: '' } }, { zipCode: { $ne: null }} ]} ,
         { $and: [ { country: { $ne: '' } }, { country: { $ne: null }} ]} ,
         { $and: [ { mobileNumber: { $ne: '' } }, { mobileNumber: { $ne: null }} ]} ,
+        { $and: [ { customerName: { $ne: '' } }, { customerName: { $ne: null }} ]} ,
+        { $and: [ { accountNumber: { $ne: '' } }, { accountNumber: { $ne: null }} ]} ,
+        { $and: [ { aadharNumber: { $ne: '' } }, { aadharNumber: { $ne: null }} ]} ,
+        { $and: [ { panNumber: { $ne: '' } }, { panNumber: { $ne: null }} ]} ,
+        { $and: [ { creditScore: { $ne: '' } }, { creditScore: { $ne: null }} ]} ,
+        { $and: [ { accountType: { $ne: '' } }, { accountType: { $ne: null }} ]} ,
+        { $and: [ { creditScore: { $ne: '' } }, { creditScore: { $ne: null }} ]} ,
+        { $and: [ { annualAvgIncome: { $ne: '' } }, { annualAvgIncome: { $ne: null }} ]} ,
 
       ]
    })
@@ -95,6 +103,14 @@ exports.updateUserByEmail = async (req, res) => {
         zipCode:req.body.zipCode,
         country:req.body.country,
         mobileNumber:req.body.mobile,
+        customerName: req.body.namec,
+        accountNumber: req.body.accountnumber?Number(req.body.accountnumber):req.body.accountnumber,
+        aadharNumber: req.body.aadhar?Number(req.body.aadhar):req.body.aadhar,
+        panNumber:req.body.pan,
+        creditScore:req.body.creditscore?Number(req.body.creditscore):req.body.creditscore,
+        annualAvgIncome:req.body.annualavgincomeNumber(req.body.annualavgincome),
+        incomeSource:req.body.incomesource,
+        accountType:req.body.accounttype
       }
     })
     res.status(200).json('Message: User Updated')
