@@ -2,6 +2,8 @@
 
 BIDDING CARS is a car auction web application that focuses on giving the best deal for a car owner , by creating a competitive market so that the product is sold at its best price. Easy to use interface so that the owner can list his/her car very easily.
 
+![bidding cars logo](https://user-images.githubusercontent.com/69381563/204001172-b7efcf1b-5307-480b-ad72-819a6dc28832.PNG)
+
 # Table of Contents
 
 1. [Demo](#demo)
