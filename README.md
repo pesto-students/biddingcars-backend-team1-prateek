@@ -54,7 +54,7 @@ We tried to use a completely modern tech stack while testing out some new techno
 ## Authors
 
 - [Aman Das](https://github.com/AmanDas2000)
-- [Rahul Savant](https://github.com/rahulsawant17)
+- [Rahul Sawant](https://github.com/rahulsawant17)
 
 ## License
 
