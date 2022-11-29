@@ -1,21 +1,61 @@
-# Pesto Assignments
+# Bidding Cars
 
-Welcome to Pesto assignments.
+BIDDING CARS is a car auction web application that focuses on giving the best deal for a car owner , by creating a competitive market so that the product is sold at its best price. Easy to use interface so that the owner can list his/her car very easily.
+
+![bidding cars logo](https://user-images.githubusercontent.com/69381563/204001172-b7efcf1b-5307-480b-ad72-819a6dc28832.PNG)
+
+# Table of Contents
+
+1. [Demo](#demo)
+2. [Installation](#installation)
+3. [Technology Stack](#technology-stack)
+4. [Authors](#authors)
+5. [License](#license)
+
+## Demo
+
+[Project Demo](https://biddingcars.netlify.app)
+
+Please Note:
+
+1. We recommend using this app in any browser other than Microsoft Edge
+2. Use the website on Laptop | Desktop | Tablet | Mobile only for better expirence.
+
+**Test Credentials for Users:**
+| Email | Password
+| ----------- | -----------  |
+| dummyuser@gmail.com | 9999999999 |
 
 
-## How to solve assignments
+## Installation
 
-Weekly Assignments will be shared by your mentor or instructor.
+- Fork or directly clone this repository to your local machine
 
-Make sure master or main branch is protected and you are not able to push any code directly to master.
+- Run the below command to install the packages in package.json
 
-- Clone this repo to your local.
-- Checkout to new branch for submission. Suggestion you can name new branch week wise - branch for week 1 assignment can be week1
 ```bash
-git checkout -b week1
+npm install
 ```
-- Create Assignment week folder in root directory(if it doesn't exist) for eg. for solving week 1 assignment create folder with name "week1".
-- You can create subfolders in main week(week1) folder if required.
-- Add proper readme [(How to Write proper readme](https://meakaakka.medium.com/a-beginners-guide-to-writing-a-kickass-readme-7ac01da88ab3) )in week's folder or subfolder explaining about assignment, how to run assignment and any other instructions. 
-- Raise a PR against master and add your mentor as reviewer
-- Resolve PR comments if any and once your mentor approves your PR, Merge it.
+
+- Run the below command to start the app
+
+```bash
+ npm start
+```
+
+## Technology Stack
+
+We tried to use a completely modern tech stack while testing out some new technologies that we had never used before
+
+- [Node JS](https://nodejs.org/en/)
+- [Express JS](https://expressjs.com/)
+- [MongoDB](https://www.mongodb.com/)
+
+## Authors
+
+- [Aman Das](https://github.com/AmanDas2000)
+- [Rahul Sawant](https://github.com/rahulsawant17)
+
+## License
+
+[MIT](https://opensource.org/licenses/MIT)
